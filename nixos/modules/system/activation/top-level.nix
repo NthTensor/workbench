@@ -128,6 +128,7 @@ let
 
       # Needed by switch-to-configuration.
       perl = "${pkgs.perl}/bin/perl -I${pkgs.perlPackages.FileSlurp}/lib/perl5/site_perl";
+      flavour = "nixos";
   } else throw "\nFailed assertions:\n${concatStringsSep "\n" (map (x: "- ${x}") failed)}");
 
   # Replace runtime dependencies
