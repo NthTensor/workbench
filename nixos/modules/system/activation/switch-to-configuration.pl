@@ -34,7 +34,7 @@ my $reloadListFile = "$flavour{'commandPrefix'}reload-list";
 
 my $action = shift @ARGV;
 
-if ("@localeArchive@" ne "") {
+if ((not defined(@localeArchive@)) || "@localeArchive@" ne "") {
     $ENV{LOCALE_ARCHIVE} = "@localeArchive@";
 }
 
