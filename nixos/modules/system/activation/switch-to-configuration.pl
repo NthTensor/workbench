@@ -346,8 +346,8 @@ if ($flavour eq "nixos") {
     # automatically by starting local-fs.target.  FIXME: might be nicer if
     # we generated units for all mounts; then we could unify this with the
     # unit checking code above.
-    my ($prevFss, $prevSwaps) = parseFstab "/etc/fstab";
-    my ($newFss, $newSwaps) = parseFstab "$out/etc/fstab";
+    my ($prevFss, $prevSwaps) = parseFstab("/etc/fstab");
+    my ($newFss, $newSwaps) = parseFstab("$out/etc/fstab");
     foreach my $mountPoint (keys %$prevFss) {
         my $prev = $prevFss->{$mountPoint};
         my $new = $newFss->{$mountPoint};
