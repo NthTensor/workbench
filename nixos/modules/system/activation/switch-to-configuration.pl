@@ -34,9 +34,10 @@ my $reloadListFile = "$flavour{'commandPrefix'}reload-list";
 
 my $action = shift @ARGV;
 
-if (defined("@localeArchive@") && "@localeArchive@" ne "") {
-    $ENV{LOCALE_ARCHIVE} = "@localeArchive@";
-}
+# Temp Fix
+# localeArchive) && "@localeArchive" ne "") {
+#     $ENV{LOCALE_ARCHIVE} = "@localeArchive";
+# }
 
 if (!defined $action || ($action ne "switch" && $action ne "$flavour{'mode'}" && $action ne "test" && $action ne "dry-activate")) {
     print STDERR <<EOF;
