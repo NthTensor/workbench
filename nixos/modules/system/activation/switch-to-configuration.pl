@@ -34,7 +34,7 @@ my $reloadListFile = "$flavour{'commandPrefix'}reload-list";
 
 my $action = shift @ARGV;
 
-if ((not defined(@localeArchive@)) || "@localeArchive@" ne "") {
+if (defined("@localeArchive@") && "@localeArchive@" ne "") {
     $ENV{LOCALE_ARCHIVE} = "@localeArchive@";
 }
 
@@ -167,7 +167,7 @@ $unitsToRestart{$_} = 1 foreach
 $unitsToReload{$_} = 1 foreach
     split '\n', read_file($reloadListFile, err_mode => 'quiet') // "";
 
-my $activePrev = getActiveUnits;
+my $activePrev = getActiveUnits();
 while (my ($unit, $state) = each %{$activePrev}) {
     my $baseUnit = $unit;
 
@@ -503,7 +503,7 @@ sub getEnabledUnits {
 }
 
 if ($flavour eq "nixup") {
-    my $enabledNew = getEnabledUnits;
+    my $enabledNew = getEnabledUnits();
     foreach my $enabledUnit (keys %$enabledNew) {
         my $state = `LANG= @systemd@/bin/systemctl $flavour{'commandFlag'} show --property=ActiveState --value $enabledUnit`;
         chomp $state;
@@ -517,7 +517,7 @@ if ($flavour eq "nixup") {
 
 # Print failed and new units.
 my (@failed, @new, @restarting);
-my $activeNew = getActiveUnits;
+my $activeNew = getActiveUnits();
 while (my ($unit, $state) = each %{$activeNew}) {
     if ($state->{state} eq "failed") {
         push @failed, $unit;
