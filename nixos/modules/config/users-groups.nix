@@ -125,7 +125,7 @@ let
       config.branch = mkOption {
         type = type.str;
         default = "master";
-        description = "The branch to track on the remote config repo."
+        description = "The branch to track on the remote config repo.";
       };
 
       cryptHomeLuks = mkOption {
