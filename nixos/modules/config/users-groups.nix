@@ -549,7 +549,7 @@ in {
     };
 
     system.activationScripts.users = {
-      deps = with nixpkg.perlPackages; [ GitRepository ];
+      deps = with pkgs.perlPackages; [ GitRepository ];
       text = ''
         install -m 0700 -d /root
         install -m 0755 -d /home
