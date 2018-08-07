@@ -2,6 +2,7 @@ use strict;
 use File::Path qw(make_path);
 use File::Slurp;
 use JSON;
+use Git::Repository;
 
 make_path("/var/lib/nixos", { mode => 0755 });
 
@@ -210,6 +211,20 @@ foreach my $u (@{$spec->{users}}) {
             $u->{hashedPassword} = $u->{initialHashedPassword};
         }
     }
+
+    # Setup user-config git repositories
+    my $config = $u->{config};
+    my $configDir = (defined $config->{directory}) ? $config->{directory} : "/etc/user/$name/";
+    make_path($configDir, { mode => 0700 }) if ! -e $configDir;
+    chown $u->{uid}, $u->{gid}, $configDir;
+
+    # Pull from the repository as needed
+    if (not -d "$configDir/.git") {
+        my $r = Git::Repository->run( clone => $config->{remote} => $configDir );
+    } else {
+        my $r = Git::Repository->new( work_tree => $configDir );
+    }
+    $r->run(checkout => $config->{branch})
 
     # Create a home directory.
     if ($u->{createHome}) {

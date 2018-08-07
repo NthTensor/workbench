@@ -109,6 +109,25 @@ let
         description = "The user's home directory.";
       };
 
+      config.remote = mkOption {
+        type = types.str;
+        default = "https://github.com/NthTensor/guest.git";
+        example = "https://github.com/NthTensor/miles.git";
+        description = "The remote for the user's config";
+      };
+
+      config.directory = mkOption {
+        type = types.nullOr types.path;
+        default = null;
+        description = "The location of the user's config repo.";
+      };
+
+      config.branch = mkOption {
+        type = type.str;
+        default = "master";
+        description = "The branch to track on the remote config repo."
+      };
+
       cryptHomeLuks = mkOption {
         type = with types; nullOr str;
         default = null;
@@ -537,6 +556,7 @@ in {
         ${pkgs.perl}/bin/perl -w \
           -I${pkgs.perlPackages.FileSlurp}/lib/perl5/site_perl \
           -I${pkgs.perlPackages.JSON}/lib/perl5/site_perl \
+          -I${pkgs.perlPackages.GitRepository}/lib/perl15/site_perl \
           ${./update-users-groups.pl} ${spec}
       '';
 
