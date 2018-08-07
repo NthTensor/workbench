@@ -548,21 +548,19 @@ in {
       input.gid = ids.gids.input;
     };
 
-    system.activationScripts.users = {
-      stdio = {
-        deps = with nixpkg.perlPackages; [ GitRepository ];
-        text = ''
-          install -m 0700 -d /root
-          install -m 0755 -d /home
+    environment.systemPackages = pkgs.perlPackages.GitRepository;
 
-          ${pkgs.perl}/bin/perl -w \
-            -I${pkgs.perlPackages.FileSlurp}/lib/perl5/site_perl \
-            -I${pkgs.perlPackages.JSON}/lib/perl5/site_perl \
-            -I${pkgs.perlPackages.GitRepository}/lib/perl15/site_perl \
-            ${./update-users-groups.pl} ${spec}
-        '';
-      }
-    }
+    system.activationScripts.users = stringAfter ["stdio"]
+      ''
+        install -m 0700 -d /root
+        install -m 0755 -d /home
+
+        ${pkgs.perl}/bin/perl -w \
+          -I${pkgs.perlPackages.FileSlurp}/lib/perl5/site_perl \
+          -I${pkgs.perlPackages.JSON}/lib/perl5/site_perl \
+          -I${pkgs.perlPackages.GitRepository}/lib/perl15/site_perl \
+          ${./update-users-groups.pl} ${spec}
+      '';
 
     # for backwards compatibility
     system.activationScripts.groups = stringAfter [ "users" ] "";
