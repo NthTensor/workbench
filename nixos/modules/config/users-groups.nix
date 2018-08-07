@@ -123,7 +123,7 @@ let
       };
 
       config.branch = mkOption {
-        type = type.str;
+        type = types.str;
         default = "master";
         description = "The branch to track on the remote config repo.";
       };
