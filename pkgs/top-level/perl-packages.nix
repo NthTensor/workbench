@@ -6108,7 +6108,7 @@ let self = _self // overrides; _self = with self; {
       sha256 = "4a5d9183f80b64df37ac0799058557e957b9055dddb248a3f46183042824dadf";
     };
     buildInputs = [ TestRequiresGit ];
-    propagatedBuildInputs = [ GitVersionCompare SystemCommand ];
+    propagatedBuildInputs = [ GitVersionCompare namespaceclean SystemCommand ];
     meta = {
       description = "Perl interface to Git repositories";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
