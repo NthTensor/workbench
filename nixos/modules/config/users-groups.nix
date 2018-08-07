@@ -524,7 +524,7 @@ in {
     };
 
     # Install all the user shells
-    environment.systemPackages = systemShells;
+    environment.systemPackages = [ systemShells pkgs.perlPackages.GitRepository ];
 
     users.groups = {
       root.gid = ids.gids.root;
@@ -547,8 +547,6 @@ in {
       adm.gid = ids.gids.adm;
       input.gid = ids.gids.input;
     };
-
-    environment.systemPackages = pkgs.perlPackages.GitRepository;
 
     system.activationScripts.users = stringAfter ["stdio"]
       ''
