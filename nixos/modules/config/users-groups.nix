@@ -561,8 +561,8 @@ in {
             -I${pkgs.perlPackages.GitRepository}/lib/perl15/site_perl \
             ${./update-users-groups.pl} ${spec}
         '';
-      }
-    }
+      };
+    };
 
     # for backwards compatibility
     system.activationScripts.groups = stringAfter [ "users" ] "";
